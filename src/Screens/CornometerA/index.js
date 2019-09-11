@@ -1,5 +1,8 @@
 import React from 'react';
 import {View, Text, StyleSheet, TouchableOpacity, AppState} from 'react-native';
+import {connect} from 'react-redux';
+
+import {startTimerAction} from './action';
 
 class CronometerA extends React.Component {
   constructor(props) {
@@ -22,31 +25,30 @@ class CronometerA extends React.Component {
     } = this.props.navigation.state;
 
     this.setState({id, title});
-    clearInterval(this.state.timer);
+    //clearInterval(this.state.timer);
 
-    this.onStartCronometer();
+    this.onStartCronometer({id, title});
   }
 
-  onStartCronometer = () => {
-    let timer = setInterval(() => {
-      let num = (Number(this.state.secondsCounter) + 1).toString(),
-        count = this.state.minutesCounter;
-      if (Number(this.state.secondsCounter) == 59) {
-        count = (Number(this.state.minutesCounter) + 1).toString();
-        num = '00';
-      }
-
-      this.setState({
-        minutesCounter: count.length == 1 ? '0' + count : count,
-        secondsCounter: num.length == 1 ? '0' + num : num,
-      });
-    }, 1000);
-
-    this.setState({timer, startDisable: true});
+  onStartCronometer = timerData => {
+    // let timer = setInterval(() => {
+    //   let num = (Number(this.state.secondsCounter) + 1).toString(),
+    //     count = this.state.minutesCounter;
+    //   if (Number(this.state.secondsCounter) == 59) {
+    //     count = (Number(this.state.minutesCounter) + 1).toString();
+    //     num = '00';
+    //   }
+    //   this.setState({
+    //     minutesCounter: count.length == 1 ? '0' + count : count,
+    //     secondsCounter: num.length == 1 ? '0' + num : num,
+    //   });
+    // }, 1000);
+    // this.setState({timer, startDisable: true});
+    this.props.startCronometer(timerData);
   };
 
   onButtonStop = () => {
-    clearInterval(this.state.timer);
+    //clearInterval(this.state.timer);
     this.setState({startDisable: false});
   };
 
@@ -114,4 +116,15 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CronometerA;
+const mapStateToProps = state => ({
+  state,
+});
+
+const mapDispatchToProps = dispatch => ({
+  startCronometer: timerData => dispatch(startTimerAction(timerData)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CronometerA);

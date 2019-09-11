@@ -2,10 +2,10 @@ import {
   combineReducers
 } from 'redux';
 
-import Teste from './teste'
+import Timer from './timerReducer'
 
 const rootReducer = combineReducers({
-  Teste
+  Timer
 });
 
 export default rootReducer;
