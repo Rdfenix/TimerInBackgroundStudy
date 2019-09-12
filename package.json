@@ -5,7 +5,9 @@
   "scripts": {
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "clean": "cd android && ./gradlew clean && cd .. && npm start -- --reset-cache",
+    "runAndroid": "react-native run-android"
   },
   "dependencies": {
     "react": "16.8.6",

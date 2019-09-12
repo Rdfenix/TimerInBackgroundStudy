@@ -1,5 +1,8 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, AppState} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {startTimer} from '../../Actions/timerAction';
 
 class CronometerA extends React.Component {
   constructor(props) {
@@ -114,4 +117,17 @@ const styles = StyleSheet.create({
   },
 });
 
-export default CronometerA;
+const mapStateToProps = state => ({
+  id: state.timer.id,
+  seconds: state.timer.seconds,
+  minutes: state.timer.minutes,
+  hours: state.timer.hours,
+});
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({startTimer}, dispatch);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(CronometerA);
