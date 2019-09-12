@@ -24,10 +24,13 @@ class CronometerA extends React.Component {
       params: {id, title},
     } = this.props.navigation.state;
 
+    const {seconds, minutes, hours} = this.props;
+
     this.setState({id, title});
     clearInterval(this.state.timer);
 
-    this.onStartCronometer();
+    //this.onStartCronometer();
+    this.props.startTimer({id, seconds, minutes, hours});
   }
 
   onStartCronometer = () => {
@@ -63,11 +66,12 @@ class CronometerA extends React.Component {
 
   render() {
     const {title} = this.state;
+    console.log(this.props);
     return (
       <View style={styles.container}>
         <Text>{title}</Text>
         <Text style={styles.counterText}>
-          {this.state.minutesCounter} : {this.state.secondsCounter}
+          {this.props.minutes} : {this.props.seconds}
         </Text>
 
         <TouchableOpacity

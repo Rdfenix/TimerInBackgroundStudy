@@ -2,7 +2,7 @@ import {
   GET_TIMER
 } from './constTypesAction'
 
-const timer;
+let timer;
 
 export const startTimer = (timerData) => {
 
@@ -15,9 +15,14 @@ export const startTimer = (timerData) => {
 
   return dispatch => {
 
-    let secondsCounter = seconds && seconds.length > 0 ? seconds : '00',
-      minutesCounter = minutes && minutes.length > 0 ? minutes : '00',
-      hoursCounter = hours && hours.length > 0 ? hours : '00';
+    // let secondsCounter = seconds && seconds.length > 0 ? seconds : '00',
+    //   minutesCounter = minutes && minutes.length > 0 ? minutes : '00',
+    //   hoursCounter = hours && hours.length > 0 ? hours : '00';
+
+
+    let secondsCounter = '00',
+      minutesCounter = '00',
+      hoursCounter = '00';
 
     timer = setInterval(() => {
       let seconds = (Number(secondsCounter) + 1).toString(),
