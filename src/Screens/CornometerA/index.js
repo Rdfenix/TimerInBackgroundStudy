@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {startTimer} from '../../Actions/timerAction';
+import {makeGetTimer} from '../../Selectors';
 
 class CronometerA extends React.Component {
   constructor(props) {
@@ -20,13 +21,20 @@ class CronometerA extends React.Component {
   }
 
   componentDidMount() {
-    const {seconds, minutes, hours} = this.props.timer;
     const {id} = this.props.data;
+    console.log('this.props.timer', this.props.timer);
+    const {seconds, minutes, hours, isRunning} = this.props.timer.cronometer[
+      id - 1
+    ];
 
-    clearInterval(this.state.timer);
-
-    if (seconds.length >= 1)
-      this.props.startTimer({id, seconds, minutes, hours});
+    // clearInterval(this.state.timer);
+    if (!isRunning)
+      this.props.startTimer({
+        id,
+        seconds,
+        minutes,
+        hours,
+      });
   }
 
   onStartCronometer = () => {
@@ -44,12 +52,17 @@ class CronometerA extends React.Component {
       });
     }, 1000);
 
-    this.setState({timer, startDisable: true});
+    this.setState({
+      timer,
+      startDisable: true,
+    });
   };
 
   onButtonStop = () => {
     clearInterval(this.state.timer);
-    this.setState({startDisable: false});
+    this.setState({
+      startDisable: false,
+    });
   };
 
   onButtonClear = () => {
@@ -61,38 +74,35 @@ class CronometerA extends React.Component {
   };
 
   render() {
-    let minutesTimer = '00',
-      secondsTimer = '00',
-      titleTimer = '';
+    const {id, title} = this.props.data;
 
-    if (this.props.timer.id === this.props.data.id) {
-      const {id, hours, minutes, seconds} = this.props.timer;
-      const {title} = this.props.data;
-      minutesTimer = minutes;
-      secondsTimer = seconds;
-      titleTimer = title;
-    }
+    const {minutes, seconds} = this.props.timer.cronometer[id - 1];
 
     return (
       <View style={styles.container}>
-        <Text>{titleTimer}</Text>
+        <Text>{title}</Text>
         <Text style={styles.counterText}>
-          {minutesTimer} : {secondsTimer}
+          {minutes} : {seconds}
         </Text>
-
         <TouchableOpacity
           onPress={this.onButtonStop}
           activeOpacity={0.6}
-          style={[styles.button, {backgroundColor: '#FF6F00'}]}>
-          <Text style={styles.buttonText}>STOP</Text>
+          style={[
+            styles.button,
+            {
+              backgroundColor: '#FF6F00',
+            },
+          ]}>
+          <Text style={styles.buttonText}> STOP </Text>
         </TouchableOpacity>
-
         <TouchableOpacity
           onPress={this.onButtonClear}
           activeOpacity={0.6}
           style={[
             styles.button,
-            {backgroundColor: this.state.startDisable ? '#B0BEC5' : '#FF6F00'},
+            {
+              backgroundColor: this.state.startDisable ? '#B0BEC5' : '#FF6F00',
+            },
           ]}
           disabled={this.state.startDisable}>
           <Text style={styles.buttonText}> CLEAR </Text>
@@ -133,7 +143,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators({startTimer}, dispatch);
+  bindActionCreators(
+    {
+      startTimer,
+    },
+    dispatch,
+  );
 
 export default connect(
   mapStateToProps,

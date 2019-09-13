@@ -3,10 +3,14 @@ import {
 } from '../Actions'
 
 const INITIAL_STATE = {
-    id: 0,
-    seconds: '00',
-    minutes: '00',
-    hours: '00'
+    cronometer: [{
+        id: 0,
+        seconds: '00',
+        minutes: '00',
+        hours: '00',
+        isRunning: false
+    }]
+
 }
 
 const timer = (state = INITIAL_STATE, action) => {
@@ -14,12 +18,34 @@ const timer = (state = INITIAL_STATE, action) => {
         case ActionTypes.GET_TIMER:
             console.log('state', state)
             console.log('action', action.payload)
-            return {
-                ...state,
+            const id = action.payload.id - 1;
+
+            let cronometers = [...state.cronometer];
+            cronometers[id] = {
                 id: action.payload.id,
-                    seconds: action.payload.seconds,
-                    minutes: action.payload.minutes,
-                    hours: action.payload.hours
+                seconds: action.payload.seconds,
+                minutes: action.payload.minutes,
+                hours: action.payload.hours,
+                isRunning: true
+            }
+
+            if (typeof cronometers[id + 1] === 'undefined') {
+                cronometers.push({
+                    id: 0,
+                    seconds: '00',
+                    minutes: '00',
+                    hours: '00',
+                    isRunning: false
+                })
+            }
+            /*[{
+                id: action.payload.id,
+                seconds: action.payload.seconds,
+                minutes: action.payload.minutes,
+                hours: action.payload.hours
+            }];*/
+            return {
+                ...state, cronometer: [...cronometers]
             }
             default:
                 return state;
