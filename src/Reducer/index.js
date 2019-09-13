@@ -1,12 +1,15 @@
 import {
-  combineReducers
+    combineReducers
 } from 'redux';
 
-import Teste from './teste'
-import timer from './timer'
+import {
+    timer,
+    idTimer
+} from './timer'
 
 const rootReducer = combineReducers({
-  timer
+    timer,
+    idTimer
 });
 
 export default rootReducer;

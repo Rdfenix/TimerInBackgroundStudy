@@ -122,10 +122,8 @@ const styles = StyleSheet.create({
 });
 
 const mapStateToProps = state => ({
-  id: state.timer.id,
-  seconds: state.timer.seconds,
-  minutes: state.timer.minutes,
-  hours: state.timer.hours,
+  timer: state.timer,
+  id: state.idTimer,
 });
 
 const mapDispatchToProps = dispatch =>
