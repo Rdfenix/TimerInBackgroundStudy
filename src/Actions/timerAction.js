@@ -57,11 +57,11 @@ export const startTimer = (timerData) => {
     }
 }
 
-export const sendIdTimerAction = (id) => {
+export const sendIdTimerAction = (data = {}) => {
     return dispatch => {
         dispatch({
             type: ID_CRONOMETER,
-            payload: id
+            payload: data
         })
     }
 }

@@ -1,5 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, Button} from 'react-native';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {sendIdTimerAction} from '../../Actions/timerAction';
 
 const Home = props => {
   return (
@@ -8,19 +11,25 @@ const Home = props => {
         <Button
           title="Cronometer A"
           onPress={() =>
-            props.navigation.navigate('Cronometer', {
-              id: 1,
-              title: 'Cronometer A',
-            })
+            props.navigation.navigate(
+              'Cronometer',
+              props.sendIdTimerAction({
+                id: 1,
+                title: 'Cronometer A',
+              }),
+            )
           }
         />
         <Button
           title="Cronometer B"
           onPress={() =>
-            props.navigation.navigate('Cronometer', {
-              id: 2,
-              title: 'Cronometer B',
-            })
+            props.navigation.navigate(
+              'Cronometer',
+              props.sendIdTimerAction({
+                id: 2,
+                title: 'Cronometer B',
+              }),
+            )
           }
         />
       </View>
@@ -40,4 +49,11 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Home;
+const mapStateToProps = state => ({});
+const mapDispatchToProps = dispach =>
+  bindActionCreators({sendIdTimerAction}, dispach);
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(Home);

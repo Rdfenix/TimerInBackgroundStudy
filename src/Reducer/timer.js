@@ -17,16 +17,16 @@ const timer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 id: action.payload.id,
-                seconds: action.payload.seconds,
-                minutes: action.payload.minutes,
-                hours: action.payload.hours
+                    seconds: action.payload.seconds,
+                    minutes: action.payload.minutes,
+                    hours: action.payload.hours
             }
-        default:
-            return state;
+            default:
+                return state;
     }
 }
 
-const idTimer = (state = 0, action) => {
+const timerData = (state = {}, action) => {
     switch (action.type) {
         case ActionTypes.ID_CRONOMETER:
             return action.payload
@@ -37,5 +37,5 @@ const idTimer = (state = 0, action) => {
 
 export {
     timer,
-    idTimer
+    timerData
 }

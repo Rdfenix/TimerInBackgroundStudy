@@ -9,7 +9,7 @@ class CronometerA extends React.Component {
     super(props);
 
     this.state = {
-      id: null,
+      id: 0,
       title: '',
       timer: null,
       hoursCounter: '00',
@@ -20,17 +20,13 @@ class CronometerA extends React.Component {
   }
 
   componentDidMount() {
-    const {
-      params: {id, title},
-    } = this.props.navigation.state;
+    const {seconds, minutes, hours} = this.props.timer;
+    const {id} = this.props.data;
 
-    const {seconds, minutes, hours} = this.props;
-
-    this.setState({id, title});
     clearInterval(this.state.timer);
 
-    //this.onStartCronometer();
-    this.props.startTimer({id, seconds, minutes, hours});
+    if (seconds.length >= 1)
+      this.props.startTimer({id, seconds, minutes, hours});
   }
 
   onStartCronometer = () => {
@@ -65,13 +61,23 @@ class CronometerA extends React.Component {
   };
 
   render() {
-    const {title} = this.state;
-    console.log(this.props);
+    let minutesTimer = '00',
+      secondsTimer = '00',
+      titleTimer = '';
+
+    if (this.props.timer.id === this.props.data.id) {
+      const {id, hours, minutes, seconds} = this.props.timer;
+      const {title} = this.props.data;
+      minutesTimer = minutes;
+      secondsTimer = seconds;
+      titleTimer = title;
+    }
+
     return (
       <View style={styles.container}>
-        <Text>{title}</Text>
+        <Text>{titleTimer}</Text>
         <Text style={styles.counterText}>
-          {this.props.minutes} : {this.props.seconds}
+          {minutesTimer} : {secondsTimer}
         </Text>
 
         <TouchableOpacity
@@ -123,7 +129,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => ({
   timer: state.timer,
-  id: state.idTimer,
+  data: state.timerData,
 });
 
 const mapDispatchToProps = dispatch =>

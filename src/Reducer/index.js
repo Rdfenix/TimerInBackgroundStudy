@@ -4,12 +4,12 @@ import {
 
 import {
     timer,
-    idTimer
+    timerData
 } from './timer'
 
 const rootReducer = combineReducers({
     timer,
-    idTimer
+    timerData
 });
 
 export default rootReducer;
