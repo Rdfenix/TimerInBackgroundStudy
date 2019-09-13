@@ -16,8 +16,6 @@ const INITIAL_STATE = {
 const timer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ActionTypes.GET_TIMER:
-            console.log('state', state)
-            console.log('action', action.payload)
             const id = action.payload.id - 1;
 
             let cronometers = [...state.cronometer];
@@ -38,12 +36,6 @@ const timer = (state = INITIAL_STATE, action) => {
                     isRunning: false
                 })
             }
-            /*[{
-                id: action.payload.id,
-                seconds: action.payload.seconds,
-                minutes: action.payload.minutes,
-                hours: action.payload.hours
-            }];*/
             return {
                 ...state, cronometer: [...cronometers]
             }
