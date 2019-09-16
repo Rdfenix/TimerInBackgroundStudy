@@ -3,74 +3,40 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {startTimer} from '../../Actions/timerAction';
-import {makeGetTimer} from '../../Selectors';
 
 class CronometerA extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      id: 0,
-      title: '',
-      timer: null,
-      hoursCounter: '00',
-      minutesCounter: '00',
-      secondsCounter: '00',
       startDisable: false,
     };
   }
 
   componentDidMount() {
     const {id} = this.props.data;
-    console.log('this.props.timer', this.props.timer);
-    const {seconds, minutes, hours, isRunning} = this.props.timer.cronometer[
-      id - 1
-    ];
+    const {isRunning} = this.props.timer.cronometer[id - 1];
 
     // clearInterval(this.state.timer);
     if (!isRunning)
       this.props.startTimer({
         id,
-        seconds,
-        minutes,
-        hours,
       });
   }
 
-  onStartCronometer = () => {
-    let timer = setInterval(() => {
-      let num = (Number(this.state.secondsCounter) + 1).toString(),
-        count = this.state.minutesCounter;
-      if (Number(this.state.secondsCounter) == 59) {
-        count = (Number(this.state.minutesCounter) + 1).toString();
-        num = '00';
-      }
-
-      this.setState({
-        minutesCounter: count.length == 1 ? '0' + count : count,
-        secondsCounter: num.length == 1 ? '0' + num : num,
-      });
-    }, 1000);
-
-    this.setState({
-      timer,
-      startDisable: true,
-    });
-  };
-
   onButtonStop = () => {
-    clearInterval(this.state.timer);
-    this.setState({
-      startDisable: false,
-    });
+    //clearInterval(this.state.timer);
+    // this.setState({
+    //   startDisable: false,
+    // });
   };
 
   onButtonClear = () => {
-    this.setState({
-      timer: null,
-      minutesCounter: '00',
-      secondsCounter: '00',
-    });
+    // this.setState({
+    //   timer: null,
+    //   minutesCounter: '00',
+    //   secondsCounter: '00',
+    // });
   };
 
   render() {
