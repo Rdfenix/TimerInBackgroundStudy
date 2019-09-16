@@ -2,14 +2,16 @@ import {
     ActionTypes
 } from '../Actions'
 
+const initialTImerState = {
+    id: 0,
+    seconds: '00',
+    minutes: '00',
+    hours: '00',
+    isRunning: false
+}
+
 const INITIAL_STATE = {
-    cronometer: [{
-        id: 0,
-        seconds: '00',
-        minutes: '00',
-        hours: '00',
-        isRunning: false
-    }]
+    cronometer: [initialTImerState]
 
 }
 
@@ -17,6 +19,7 @@ const timer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case ActionTypes.GET_TIMER:
             const id = action.payload.id - 1;
+            const next = id + 1;
 
             let cronometers = [...state.cronometer];
             cronometers[id] = {
@@ -27,14 +30,8 @@ const timer = (state = INITIAL_STATE, action) => {
                 isRunning: true
             }
 
-            if (typeof cronometers[id + 1] === 'undefined') {
-                cronometers.push({
-                    id: 0,
-                    seconds: '00',
-                    minutes: '00',
-                    hours: '00',
-                    isRunning: false
-                })
+            if (typeof cronometers[next] === 'undefined') {
+                cronometers.push(initialTImerState)
             }
             return {
                 ...state, cronometer: [...cronometers]
