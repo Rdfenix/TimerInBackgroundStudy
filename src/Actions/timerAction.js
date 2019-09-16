@@ -17,8 +17,6 @@ export const startTimer = (timerData) => {
             minutesCounter = '00',
             hoursCounter = '00';
 
-        console.log(secondsCounter)
-
         timer = setInterval(() => {
             let seconds = (Number(secondsCounter) + 1).toString(),
                 minutes = minutesCounter,
