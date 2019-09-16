@@ -1,3 +1,4 @@
+import BackgroundTimer from 'react-native-background-timer'
 import {
     GET_TIMER,
     ID_CRONOMETER
@@ -17,7 +18,7 @@ export const startTimer = (timerData) => {
             minutesCounter = '00',
             hoursCounter = '00';
 
-        timer = setInterval(() => {
+        timer = BackgroundTimer.setInterval(() => {
             let seconds = (Number(secondsCounter) + 1).toString(),
                 minutes = minutesCounter,
                 hours = hoursCounter;
