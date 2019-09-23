@@ -37,6 +37,11 @@ export const startTimer = (timerData) => {
             secondsCounter = seconds.length == 1 ? '0' + seconds : seconds;
             hoursCounter = hours.length == 1 ? '0' + hours : hours;
 
+            console.log('teste de timer', timer)
+
+            if (minutesCounter === '01')
+                BackgroundTimer.clearInterval(timer)
+
             dispatch({
                 type: GET_TIMER,
                 payload: {
